@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import { Box, Columns, Button } from "react-bulma-components";
+import "bulma/css/bulma.min.css";
+import User from "./components/user/User";
+import "./App.css";
+
+import axios from "axios";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [user, setUser] = useState();
+    const fetchUser = async () => {
+        const url = "https://randomuser.me/api/";
+        const response = await axios(url);
+        setUser(() => response.data.results[0]);
+    };
+    useEffect(() => {
+        fetchUser();
+    }, []);
+    console.log(user);
+
+    return (
+        <Columns centered>
+            <Box className="column is-two-fifths">
+                {Boolean(user) && <User user={user} />}
+                <Button color={"info"} onClick={() => fetchUser()}>
+                    Random User
+                </Button>
+            </Box>
+        </Columns>
+    );
 }
 
 export default App;
