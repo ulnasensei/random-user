@@ -20,7 +20,7 @@ function App() {
 
     return (
         <Columns centered>
-            <Box className="column is-two-fifths">
+            <Box className="column is-one-third">
                 {Boolean(user) && <User user={user} />}
                 <Button color={"info"} onClick={() => fetchUser()}>
                     Random User
